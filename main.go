@@ -2,10 +2,10 @@ package main
 
 import (
 	"bufio"
+	"cli-todo/config"
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
@@ -88,9 +88,12 @@ func main() {
 }
 
 func saveTasks(tasks []Task) {
-	exePath, _ := os.Executable()
-	dir := filepath.Dir(exePath)
-	filePath := filepath.Join(dir, "tasks.json")
+	//getting the storage path from config package
+	filePath, err := config.GetStoragePath()
+	if err != nil {
+		fmt.Println("Error getting storage path:", err)
+		return
+	}
 	file, err := os.Create(filePath)
 	if err != nil {
 		fmt.Println("Error saving tasks:", err)
@@ -107,11 +110,15 @@ func saveTasks(tasks []Task) {
 }
 
 func loadTasks() []Task {
-	exePath, _ := os.Executable()
-	dir := filepath.Dir(exePath)
-	filePath := filepath.Join(dir, "tasks.json")
-
 	tasks := []Task{}
+
+	//getting the storage path from config package
+	filePath, err := config.GetStoragePath()
+	if err != nil {
+		fmt.Println("Error getting storage path:", err)
+		return tasks
+	}
+
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		return tasks // No tasks file found, return empty slice
 	}
