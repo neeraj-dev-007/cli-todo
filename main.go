@@ -13,7 +13,22 @@ type Task struct {
 	Description string
 }
 
+const banner = `
+ _____ ___________ _____    ___  ____________ 
+|_   _|  _  |  _  \  _  |  / _ \ | ___ \ ___ \
+  | | | | | | | | | | | | / /_\ \| |_/ / |_/ /
+  | | | | | | | | | | | | |  _  ||  __/|  __/ 
+  | | \ \_/ / |/ /\ \_/ / | | | || |   | |    
+  \_/  \___/|___/  \___/  \_| |_/\_|   \_|    
+                                              
+  `
+
+func printBanner() {
+	fmt.Println(banner)
+}
+
 func main() {
+	printBanner()
 	fmt.Println("Welcome to  CLI to-do application!")
 	fmt.Println("Type a command: add <task>, list, done <task> or exit")
 
